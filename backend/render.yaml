@@ -1,0 +1,74 @@
+# render.yaml
+# Infrastructure as Code configuration for Render
+# Place this file in the root of your repository
+
+services:
+  # Backend API Service
+  - type: web
+    name: crisisaid-backend
+    env: node
+    region: oregon # Change to: oregon, frankfurt, singapore, ohio
+    plan: free # Options: free, starter, standard, pro
+    buildCommand: cd backend && npm install && npm run build
+    startCommand: cd backend && npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    
+    # Environment Variables
+    envVars:
+      - key: NODE_ENV
+        value: production
+      
+      - key: PORT
+        value: 5000
+      
+      - key: SUPABASE_URL
+        sync: false # Set manually in Render dashboard
+      
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false # Set manually in Render dashboard
+      
+      - key: FRONTEND_URL
+        value: https://crisisaid.vercel.app # Update with your frontend URL
+      
+      - key: SWAGGER_PASSWORD
+        generateValue: true # Auto-generate secure password
+    
+    # Custom Headers (optional)
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+    
+    # Branch-specific settings
+    branch: main # Deploy from main branch
+
+# Additional configurations for different environments
+
+# Staging Environment (optional)
+# Uncomment to create a staging environment
+# - type: web
+#   name: crisisaid-backend-staging
+#   env: node
+#   region: oregon
+#   plan: free
+#   buildCommand: cd backend && npm install && npm run build
+#   startCommand: cd backend && npm start
+#   healthCheckPath: /health
+#   autoDeploy: true
+#   branch: staging
+#   envVars:
+#     - key: NODE_ENV
+#       value: staging
+#     - key: PORT
+#       value: 5000
+#     - key: SUPABASE_URL
+#       sync: false
+#     - key: SUPABASE_SERVICE_ROLE_KEY
+#       sync: false
