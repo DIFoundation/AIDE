@@ -77,7 +77,8 @@ export default function Dashboard() {
         // console.log('stat data: ', data)
       } catch (err) {
         setError(err as string || 'Failed to load stats');
-        console.error('Stats error:', err);
+        // console.error('Stats error:', err);
+        toast.error('Failed to load stats');
       } finally {
         setLoading(false);
       }
@@ -103,10 +104,11 @@ export default function Dashboard() {
 
         const data = await response.json();
         setDistribution(data);
-        console.log('distribution data: ', data)
+        // console.log('distribution data: ', data)
       } catch (err) {
         setError(err as string || 'Failed to load stats');
-        console.error('Stats error:', err);
+        // console.error('Stats error:', err);
+        toast.error('Failed to load stats');
       } finally {
         setLoading(false);
       }

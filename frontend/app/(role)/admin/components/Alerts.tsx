@@ -31,6 +31,7 @@ import { AlertCircle, Edit, Trash2, Plus } from 'lucide-react';
 import LocationPicker from '@/components/LocationPicker';
 import { getAuthToken } from '@/lib/cookies';
 import { AlertSeverity } from '@/types';
+import { toast } from 'sonner';
 
 type Alert = {
   id: string;
@@ -69,8 +70,9 @@ export default function Alerts() {
       const response = await fetch('https://crisisaid-backend.onrender.com/api/alerts');
       const data = await response.json();
       setAlerts(data);
-    } catch (error) {
-      console.error('Error fetching alerts:', error);
+    } catch {
+      // console.error('Error fetching alerts:', error);
+      toast.error('Failed to fetch alerts');
     } finally {
       setIsLoading(false);
     }
@@ -150,9 +152,9 @@ export default function Alerts() {
 
       setIsDialogOpen(false);
       fetchAlerts();
-    } catch (error) {
-      console.error('Error saving alert:', error);
-      // You might want to show an error message to the user here
+    } catch {
+      // console.error('Error saving alert:', error);
+      toast.error('Failed to save alert');
     }
   };
 
@@ -172,8 +174,9 @@ export default function Alerts() {
         setIsDeleteDialogOpen(false);
         fetchAlerts();
       }
-    } catch (error) {
-      console.error('Error deleting alert:', error);
+    } catch {
+      // console.error('Error deleting alert:', error);
+      toast.error('Failed to delete alert');
     }
   };
 
@@ -270,8 +273,11 @@ export default function Alerts() {
       </div>
 
       {/* Create/Edit Alert Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[600px]">
+      <Dialog
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+      >
+        <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
               {currentAlert?.id ? 'Edit Alert' : 'Create New Alert'}

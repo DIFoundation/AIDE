@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import dynamic from 'next/dynamic';
 import { getAuthToken } from '@/lib/cookies';
@@ -9,6 +9,18 @@ import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 
 type Tab = 'dashboard' | 'resources' | 'submissions' | 'alerts' | 'users';
+
+type UserData = {
+  id: string;
+  name: string;
+  email: string;
+  organization: string;
+  phone: string;
+  role: string;
+  verified: boolean;
+  created_at: string;
+  updated_at: string;
+}
 
 // Dynamically import admin components with SSR disabled
 const AdminDashboard = dynamic(
@@ -40,7 +52,17 @@ export default function AdminPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<UserData>({
+    id: '',
+    name: '',
+    email: '',
+    organization: '',
+    phone: '',
+    role: '',
+    verified: false,
+    created_at: '',
+    updated_at: '',
+  });
 
   useEffect(() => {
     const token = getAuthToken();
@@ -63,7 +85,9 @@ export default function AdminPage() {
         if (!response.ok) {
           throw new Error('Authentication failed');
         }
-      } catch (error) {
+        const data = await response.json();
+        setUserData(data);
+      } catch {
         toast.error('Session expired. Please log in again.');
         router.push('/user');
       }
@@ -117,8 +141,9 @@ export default function AdminPage() {
         setUserData(data);
       };
       fetchLoggedinUser();
-    } catch (error) {
-      console.error(error);
+    } catch {
+      // console.error(error);
+      toast.error('Failed to fetch logged in user, please try again');
     }
   }, []);
 
@@ -134,8 +159,9 @@ export default function AdminPage() {
       Cookies.remove('authToken');
       toast.success('You have been logged out');
       router.push('/user');
-    } catch (error) {
-      console.error(error);
+    } catch {
+      // console.error(error);
+      toast.error('Failed to log out, please try again');
     }
   }
 

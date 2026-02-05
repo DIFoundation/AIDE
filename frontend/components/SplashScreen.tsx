@@ -42,7 +42,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ isLoading, children }) => {
           >
             <div className="w-24 h-24 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
               <Image
-                src="/logo.png"
+                src="/favicon.ico"
                 alt="AIDE Logo"
                 width={90}
                 height={90}
