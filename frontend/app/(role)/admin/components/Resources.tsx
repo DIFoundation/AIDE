@@ -300,6 +300,10 @@ export default function Resources() {
     }
   };
 
+  const getVerifiedBadgeVariant = (verified: boolean) => {
+    return verified ? "default" : "destructive";
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -395,7 +399,54 @@ export default function Resources() {
                         .join(" ")}
                     </Badge>
                   </TableCell>
-                  <TableCell>{resource.verified ? "Yes" : "No"}</TableCell>
+                  <TableCell>
+                    <Select
+                      value={resource.verified ? "true" : "false"}
+                      onValueChange={async (value) => {
+                        try {
+                          const token = Cookies.get("authToken");
+                          const response = await fetch(
+                            `https://aide-backend-qj4f.onrender.com/api/resources/${resource.id}/verify`,
+                            {
+                              method: "PATCH",
+                              headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token}`,
+                              },
+                              body: JSON.stringify({
+                                verified: value === "true",
+                              }),
+                            }
+                          );
+
+                          if (!response.ok) {
+                            throw new Error("Failed to update verification status");
+                          }
+
+                          // Update the local state to reflect the change
+                          setResources(
+                            resources.map((r) =>
+                              r.id === resource.id
+                                ? { ...r, verified: value === "true" }
+                                : r
+                            )
+                          );
+                          toast.success("Verification status updated successfully");
+                        } catch (error) {
+                          console.error("Error updating verification status:", error);
+                          toast.error("Failed to update verification status");
+                        }
+                      }}
+                    >
+                      <SelectTrigger className="w-[120px]">
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="true">Verified</SelectItem>
+                        <SelectItem value="false">Unverified</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </TableCell>
                   <TableCell>{resource.capacity}</TableCell>
                   <TableCell className="max-w-[200px] truncate">
                     {resource.address}
@@ -574,7 +625,6 @@ export default function Resources() {
                     }
                     min="0"
                     placeholder="Enter current occupancy"
-                    required
                   />
                 </div>
               </div>

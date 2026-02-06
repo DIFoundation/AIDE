@@ -10,10 +10,13 @@ import Cookies from "js-cookie";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
+type Role = "VOLUNTEER" | "USER";
+
 export default function AdminLogin() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<Role>("USER");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -132,7 +135,7 @@ export default function AdminLogin() {
           name: name.trim(), 
           email: email.trim().toLowerCase(), 
           password,
-          role: "USER" // Default role, can be changed by admin later
+          role: role // Default role, can be changed by admin later
         })
       });
 
@@ -454,6 +457,29 @@ export default function AdminLogin() {
                 <p className="text-xs text-light-bg/50 ml-1">
                   Must be at least 6 characters long
                 </p>
+              </div>
+
+              <div className="space-y-2">
+                <label
+                  htmlFor="register-role"
+                  className="text-sm font-semibold text-light-bg/80 ml-1"
+                >
+                  Role
+                </label>
+                <select
+                  id="register-role"
+                  value={role}
+                  onChange={(e) => {
+                    setRole(e.target.value as Role);
+                    setError("");
+                  }}
+                  className="w-full bg-card-light/5 border border-light-bg/10 rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-primary/50 focus:outline-none transition-all text-light-bg placeholder-light-bg/40"
+                  disabled={isLoading}
+                  required
+                >
+                  <option value="USER">User</option>
+                  <option value="VOLUNTEER">Volunteer</option>
+                </select>
               </div>
 
               {/* Submit Button */}
