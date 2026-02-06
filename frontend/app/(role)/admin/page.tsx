@@ -75,7 +75,7 @@ export default function AdminPage() {
     // Additional authentication logic if needed
     const verifyToken = async () => {
       try {
-        const response = await fetch('https://crisisaid-backend.onrender.com/api/auth/me', {
+        const response = await fetch('https://aide-backend-qj4f.onrender.com/api/auth/me', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
@@ -130,7 +130,7 @@ export default function AdminPage() {
         return;
       }
       const fetchLoggedinUser = async () => {
-        const response = await fetch('https://crisisaid-backend.onrender.com/api/auth/me', {
+        const response = await fetch('https://aide-backend-qj4f.onrender.com/api/auth/me', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
@@ -149,7 +149,7 @@ export default function AdminPage() {
 
   const handleLogout = async () => {
     try {
-      await fetch('https://crisisaid-backend.onrender.com/api/auth/signout', {
+      await fetch('https://aide-backend-qj4f.onrender.com/api/auth/signout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -170,7 +170,7 @@ export default function AdminPage() {
       {/* Sidebar */}
       <div className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-card-dark text-black flex flex-col transition-all duration-300`}>
         <div className="p-4 border-b border-light-bg/10 flex items-center justify-between">
-          {sidebarOpen && <h1 className="text-xl font-bold">CrisisAid Admin</h1>}
+          {sidebarOpen && <h1 className="text-xl font-bold">AIDE Admin</h1>}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="p-1 rounded hover:bg-white/10"

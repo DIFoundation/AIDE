@@ -25,7 +25,7 @@ export default function UserProfile() {
           return;
         }
 
-        const response = await fetch('https://crisisaid-backend.onrender.com/api/auth/me', {
+        const response = await fetch('https://aide-backend-qj4f.onrender.com/api/auth/me', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -52,7 +52,7 @@ export default function UserProfile() {
   const handleLogout = async () => {
     try {
       const token = getAuthToken();
-      await fetch('https://crisisaid-backend.onrender.com/api/auth/signout', {
+      await fetch('https://aide-backend-qj4f.onrender.com/api/auth/signout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

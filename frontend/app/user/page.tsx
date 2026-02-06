@@ -38,7 +38,7 @@ export default function AdminLogin() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://crisisaid-backend.onrender.com/api/auth/signin", {
+      const response = await fetch("https://aide-backend-qj4f.onrender.com/api/auth/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -77,13 +77,15 @@ export default function AdminLogin() {
         }
       } else {
         // Handle specific error messages from backend
-        setError(data.data.message || data.error || "Invalid email or password");
-        toast.error(data.data.message || "Login failed");
+        const errorMessage = data.message || data.error || "Invalid email or password";
+        setError(errorMessage);
+        toast.error(errorMessage);
       }
-    } catch (err) {
-      console.error("Login error:", err);
-      setError("Unable to connect to the server. Please try again later.");
-      toast.error("Connection error. Please try again.");
+    } catch (err: any) {
+      const errorMessage = err?.response?.data?.message || err?.message || "Unable to connect to the server. Please try again later.";
+      console.error("Login error:", errorMessage);
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -121,7 +123,7 @@ export default function AdminLogin() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://crisisaid-backend.onrender.com/api/auth/signup", {
+      const response = await fetch("https://aide-backend-qj4f.onrender.com/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -179,7 +181,7 @@ export default function AdminLogin() {
             className='rounded-lg'
           />
           {/* <span className="text-3xl font-bold tracking-tight text-light-bg">
-            CrisisAid
+            aide
           </span> */}
         </div>
         <p className="text-light-bg/70 font-medium">
@@ -246,7 +248,7 @@ export default function AdminLogin() {
                       setEmail(e.target.value);
                       setError("");
                     }}
-                    placeholder="admin@crisisaid.org"
+                    placeholder="admin@aide.org"
                     className="w-full bg-card-light/5 border border-light-bg/10 rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-primary/50 focus:outline-none transition-all text-light-bg placeholder-light-bg/40"
                     disabled={isLoading}
                     required
@@ -413,7 +415,7 @@ export default function AdminLogin() {
                       setEmail(e.target.value);
                       setError("");
                     }}
-                    placeholder="admin@crisisaid.org"
+                    placeholder="admin@aide.org"
                     className="w-full bg-card-light/5 border border-light-bg/10 rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-primary/50 focus:outline-none transition-all text-light-bg placeholder-light-bg/40"
                     disabled={isLoading}
                     required
@@ -455,13 +457,14 @@ export default function AdminLogin() {
               </div>
 
               {/* Submit Button */}
-              <button
+              <Button
                 type="submit"
+                variant="default"
                 disabled={isLoading}
-                className={`w-full py-4 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 group ${
+                className={`w-full py-6 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 group ${
                   isLoading
                     ? "bg-success/70 cursor-not-allowed"
-                    : "bg-success hover:bg-success/90 hover:shadow-xl"
+                    : "hover:bg-success/90 hover:shadow-xl"
                 }`}
               >
                 {isLoading ? (
@@ -497,7 +500,7 @@ export default function AdminLogin() {
                     />
                   </>
                 )}
-              </button>
+              </Button>
             </form>
 
             <div className="mt-8 text-center">
