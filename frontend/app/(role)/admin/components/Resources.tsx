@@ -252,17 +252,17 @@ export default function Resources() {
     }
   };
 
-  const handleLocationSelect = (location: any) => {
-    setCurrentResource((prev) => ({
-      ...prev,
-      latitude: location.lat,
-      longitude: location.lng,
-      address: location.address || "",
-      city: location.city || "",
-      state: location.state || "",
-      country: location.country || "",
-    }));
-  };
+  // const handleLocationSelect = (location: any) => {
+  //   setCurrentResource((prev) => ({
+  //     ...prev,
+  //     latitude: location.lat,
+  //     longitude: location.lng,
+  //     address: location.address || "",
+  //     city: location.city || "",
+  //     state: location.state || "",
+  //     country: location.country || "",
+  //   }));
+  // };
 
   // Status badge color mapping
   const getStatusBadgeVariant = (status: ResourceStatus) => {
@@ -502,7 +502,7 @@ export default function Resources() {
                       })
                     }
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -514,7 +514,9 @@ export default function Resources() {
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
 
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Status</label>
                   <Select
@@ -526,7 +528,7 @@ export default function Resources() {
                       })
                     }
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select status" />
                     </SelectTrigger>
                     <SelectContent>
@@ -558,6 +560,23 @@ export default function Resources() {
                     required
                   />
                 </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Current Occupancy</label>
+                  <Input
+                    type="number"
+                    value={currentResource.current_occupancy || ''}
+                    onChange={(e) =>
+                      setCurrentResource({
+                        ...currentResource,
+                        current_occupancy: parseInt(e.target.value) || 0,
+                      })
+                    }
+                    min="0"
+                    placeholder="Enter current occupancy"
+                    required
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -580,17 +599,17 @@ export default function Resources() {
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Location</label>
                   <div className="h-64 rounded-lg overflow-hidden border">
-                  <LocationPicker
-                    formData={{
-                      latitude: currentResource.latitude || 0,
-                      longitude: currentResource.longitude || 0,
-                      address: currentResource.address || '',
-                      city: currentResource.city || '',
-                      state: currentResource.state || '',
-                      country: currentResource.country || ''
-                    }}
-                    setFormData={handleLocationSelect}
-                  />
+                    <LocationPicker
+                      formData={{
+                        latitude: currentResource?.latitude || 0,
+                        longitude: currentResource?.longitude || 0,
+                        address: currentResource?.address || '',
+                        city: currentResource?.city || '',
+                        state: currentResource?.state || '',
+                        country: currentResource?.country || ''
+                      }}
+                      setFormData={setCurrentResource}
+                    />
                   </div>
                 </div>
 

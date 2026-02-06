@@ -132,7 +132,7 @@ export default function AppHeader({
         {/* Logo / Title */}
         <div className="hidden md:flex items-center">
           <Image
-            src="/logo.png"
+            src="/favicon.ico"
             alt="AIDE Logo"
             width={44}
             height={44}

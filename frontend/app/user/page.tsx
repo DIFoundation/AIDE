@@ -172,7 +172,7 @@ export default function AdminLogin() {
       <div className="mb-10 text-center">
         <div className="flex items-center justify-center gap-2 mb-4">
           <Image
-            src="/logo.png"
+            src="/favicon.ico"
             alt="AIDE Logo"
             width={80}
             height={80}
@@ -183,7 +183,7 @@ export default function AdminLogin() {
           </span> */}
         </div>
         <p className="text-light-bg/70 font-medium">
-          Internal Administration Portal
+            Artificial Intelligence Disaster Emergency
         </p>
       </div>
 

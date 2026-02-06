@@ -49,7 +49,8 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ isLoading, children }) => {
                 className='rounded-lg'
               />
             </div>
-            <h1 className="text-2xl font-bold text-foreground">CrisisAid</h1>
+            <h1 className="text-2xl font-bold text-foreground">AIDE</h1>
+            <h2 className="text-lg font-semibold text-foreground">Artificial Intelligence Disaster Emergency</h2>
             <p className="text-muted-foreground mt-2">Connecting help with those in need</p>
           </motion.div>
           {isLoading && (

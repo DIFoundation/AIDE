@@ -5,7 +5,7 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'CrisisAid API Documentation',
+      title: 'AIDE API Documentation',
       version: version,
       description: `
         A comprehensive backend API for managing disaster relief resources, emergency alerts, 
@@ -27,9 +27,9 @@ const options: swaggerJsdoc.Options = {
         API requests may be rate limited. Please implement appropriate throttling in your client.
       `,
       contact: {
-        name: 'CrisisAid Support',
-        url: 'https://github.com/DIFoundation/CrisisAid',
-        email: 'support@crisisaid.com'
+        name: 'AIDE Support',
+        url: 'https://github.com/DIFoundation/AIDE',
+        email: 'support@aide.com'
       },
       license: {
         name: 'ISC',
@@ -42,7 +42,7 @@ const options: swaggerJsdoc.Options = {
         description: 'Development server'
       },
       {
-        url: 'https://crisisaid-backend.onrender.com',
+        url: 'https://aide-backend.onrender.com',
         description: 'Production server'
       }
     ],

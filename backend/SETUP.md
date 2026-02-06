@@ -1,4 +1,4 @@
-# CrisisAid Backend API 🚨
+# AIDE Backend API 🚨
 
 A comprehensive backend API for managing disaster relief resources, emergency alerts, and community submissions during crisis situations.
 
