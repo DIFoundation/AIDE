@@ -11,7 +11,7 @@ export const swaggerUIOptions = {
         font-size: 36px;
       }
     `,
-    customSiteTitle: "CrisisAid API Documentation",
+    customSiteTitle: "AIDE API Documentation",
     customfavIcon: "/favicon.ico",
     swaggerOptions: {
       persistAuthorization: true,

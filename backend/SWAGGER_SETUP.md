@@ -1,6 +1,6 @@
 # Swagger API Documentation Setup Guide
 
-Complete guide for implementing Swagger/OpenAPI documentation in the CrisisAid Backend API.
+Complete guide for implementing Swagger/OpenAPI documentation in the AIDE Backend API.
 
 ## 📋 Table of Contents
 
@@ -53,13 +53,12 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'CrisisAid API Documentation',
+      title: 'AIDE API Documentation',
       version: version,
       description: 'Comprehensive API for disaster relief management',
       contact: {
-        name: 'CrisisAid Support',
-        url: 'https://github.com/yourusername/crisisaid',
-        email: 'support@crisisaid.com'
+        name: 'AIDE Support',
+        url: 'https://github.com/DIFoundation/AIDE',
       }
     },
     servers: [
@@ -105,7 +104,7 @@ app.use(express.json());
 // Swagger Documentation UI
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: "CrisisAid API Documentation"
+  customSiteTitle: "AIDE API Documentation"
 }));
 
 // Swagger JSON endpoint
@@ -117,7 +116,7 @@ app.get("/api-docs.json", (req, res) => {
 // Root endpoint with documentation link
 app.get("/", (req, res) => {
   res.json({
-    message: "Welcome to CrisisAid API",
+    message: "Welcome to AIDE API",
     version: "1.0.0",
     documentation: "/api-docs"
   });
@@ -234,7 +233,7 @@ export const swaggerUIOptions = {
     .swagger-ui .topbar { display: none; }
     .swagger-ui .info .title { color: #2563eb; }
   `,
-  customSiteTitle: "CrisisAid API Docs",
+  customSiteTitle: "AIDE API Docs",
   customfavIcon: "/favicon.ico",
   swaggerOptions: {
     persistAuthorization: true,
@@ -261,13 +260,13 @@ Update `swagger.ts`:
 ```typescript
 const servers = process.env.NODE_ENV === 'production' 
   ? [{
-      url: process.env.API_URL || 'https://api.crisisaid.com',
+      url: process.env.API_URL || 'https://api.aide.com',
       description: 'Production server'
     }]
   : [
       { url: 'http://localhost:5000', description: 'Development' },
-      { url: 'https://staging.crisisaid.com', description: 'Staging' },
-      { url: 'https://api.crisisaid.com', description: 'Production' }
+      { url: 'https://staging.aide.com', description: 'Staging' },
+      { url: 'https://api.aide.com', description: 'Production' }
     ];
 ```
 

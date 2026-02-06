@@ -55,7 +55,7 @@ export const addResource = async (req: Request, res: Response) => {
       ...req.body,
       submitted_by: user.id,
       // Auto-verify if user is admin or volunteer
-      verified: ["ADMIN", "VOLUNTEER"].includes(user.user_metadata?.role),
+      // verified: ["ADMIN", "VOLUNTEER"].includes(user.user_metadata?.role),
       verified_by: ["ADMIN", "VOLUNTEER"].includes(user.user_metadata?.role) 
         ? user.id 
         : null,

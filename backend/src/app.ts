@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === "development") {
 // Swagger Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUIOptions, {
   customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: "CrisisAid API Documentation",
+  customSiteTitle: "AIDE API Documentation",
   customfavIcon: "/favicon.ico"
 }));
 
@@ -41,7 +41,7 @@ app.get("/api-docs.json", (req, res) => {
 // Root endpoint
 app.get("/", (req, res) => {
   res.json({
-    message: "Welcome to CrisisAid API",
+    message: "Welcome to AIDE API",
     version: "1.0.0",
     documentation: "/api-docs",
     health: "/health"
@@ -53,7 +53,7 @@ app.get("/health", (req, res) => {
   res.json({ 
     status: "ok", 
     timestamp: new Date().toISOString(),
-    service: "CrisisAid API",
+    service: "AIDE API",
     documentation: "/api-docs"
   });
 });
