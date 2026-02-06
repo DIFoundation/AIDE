@@ -44,7 +44,7 @@ export default function MapPage() {
   useEffect(() => {
     const loadAlert = async () => {
       try {
-        const alertData = await fetch('https://crisisaid-backend.onrender.com/api/alerts');
+        const alertData = await fetch('https://aide-backend-qj4f.onrender.com/api/alerts');
         const data = await alertData.json();
 
         setAlerts(data)
@@ -61,7 +61,7 @@ export default function MapPage() {
       try {
         setLoading(true);
         toast.loading('Fetching resources...');
-        const response = await fetch('https://crisisaid-backend.onrender.com/api/resources');
+        const response = await fetch('https://aide-backend-qj4f.onrender.com/api/resources');
         const data = await response.json();
 
         if (data && data.length > 0) {

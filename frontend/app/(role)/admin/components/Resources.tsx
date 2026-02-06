@@ -102,7 +102,7 @@ export default function Resources() {
         setLoading(true);
         const token = Cookies.get("authToken");
         const response = await fetch(
-          "https://crisisaid-backend.onrender.com/api/resources",
+          "https://aide-backend-qj4f.onrender.com/api/resources",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -184,7 +184,7 @@ export default function Resources() {
     try {
       const token = Cookies.get("authToken");
       const response = await fetch(
-        `https://crisisaid-backend.onrender.com/api/resources/${resourceToDelete}`,
+        `https://aide-backend-qj4f.onrender.com/api/resources/${resourceToDelete}`,
         {
           method: "DELETE",
           headers: {
@@ -216,8 +216,8 @@ export default function Resources() {
       const token = Cookies.get("authToken");
       const isUpdate = !!currentResource.id;
       const url = isUpdate
-        ? `https://crisisaid-backend.onrender.com/api/resources/${currentResource.id}`
-        : "https://crisisaid-backend.onrender.com/api/resources";
+        ? `https://aide-backend-qj4f.onrender.com/api/resources/${currentResource.id}`
+        : "https://aide-backend-qj4f.onrender.com/api/resources";
 
       const method = isUpdate ? "PUT" : "POST";
 

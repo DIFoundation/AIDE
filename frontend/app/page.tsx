@@ -158,7 +158,7 @@ export default function LandingPage() {
           </h2>
           
           <p className="text-lg text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-            In times of crisis, reliable information saves lives. CrisisAid empowers communities with real-time data, reducing response times and connecting people to critical aid when it matters most.
+            In times of crisis, reliable information saves lives. AIDE empowers communities with real-time data, reducing response times and connecting people to critical aid when it matters most.
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">

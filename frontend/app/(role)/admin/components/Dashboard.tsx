@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Gem, Send, TriangleAlert, Users } from 'lucide-react';
-import Cookies from 'js-cookie';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { getAuthToken } from '@/lib/cookies';
@@ -56,7 +55,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch('https://crisisaid-backend.onrender.com/api/dashboard/stats', {
+        const response = await fetch('https://aide-backend-qj4f.onrender.com/api/dashboard/stats', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
@@ -86,7 +85,7 @@ export default function Dashboard() {
 
     const fetchDistribution = async () => {
       try {
-        const response = await fetch('https://crisisaid-backend.onrender.com/api/dashboard/resources/distribution', {
+        const response = await fetch('https://aide-backend-qj4f.onrender.com/api/dashboard/resources/distribution', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
@@ -116,7 +115,7 @@ export default function Dashboard() {
 
     fetchStats();
     fetchDistribution();
-  }, [])
+  }, [router, token])
 
   if (loading) {
     return (

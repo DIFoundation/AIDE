@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Cookies from 'js-cookie';
-import { Search, User, Mail, Shield, ShieldAlert, Pencil, Trash2, Check, X, Loader2 } from 'lucide-react';
+import { Search, User, Mail, Shield, ShieldAlert, Trash2, Check, X, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 // Types
@@ -47,7 +47,7 @@ export default function Users() {
       try {
         setLoading(true);
         const token = Cookies.get('authToken');
-        const response = await fetch('https://crisisaid-backend.onrender.com/api/users', {
+        const response = await fetch('https://aide-backend-qj4f.onrender.com/api/users', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ export default function Users() {
     try {
       setUpdating(userId);
       const token = Cookies.get('authToken');
-      const response = await fetch(`https://crisisaid-backend.onrender.com/api/users/${userId}/role`, {
+      const response = await fetch(`https://aide-backend-qj4f.onrender.com/api/users/${userId}/role`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -125,7 +125,7 @@ export default function Users() {
     try {
       setUpdating(userId);
       const token = Cookies.get('authToken');
-      const response = await fetch(`https://crisisaid-backend.onrender.com/api/users/${userId}/verify`, {
+      const response = await fetch(`https://aide-backend-qj4f.onrender.com/api/users/${userId}/verify`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -157,7 +157,7 @@ export default function Users() {
     try {
       setUpdating(userToDelete);
       const token = Cookies.get('authToken');
-      const response = await fetch(`https://crisisaid-backend.onrender.com/api/users/${userToDelete}`, {
+      const response = await fetch(`https://aide-backend-qj4f.onrender.com/api/users/${userToDelete}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

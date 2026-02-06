@@ -67,7 +67,7 @@ export default function Alerts() {
 
   const fetchAlerts = async () => {
     try {
-      const response = await fetch('https://crisisaid-backend.onrender.com/api/alerts');
+      const response = await fetch('https://aide-backend-qj4f.onrender.com/api/alerts');
       const data = await response.json();
       setAlerts(data);
     } catch {
@@ -130,8 +130,8 @@ export default function Alerts() {
     };
 
     const url = currentAlert.id
-      ? `https://crisisaid-backend.onrender.com/api/alerts/${currentAlert.id}`
-      : 'https://crisisaid-backend.onrender.com/api/alerts';
+      ? `https://aide-backend-qj4f.onrender.com/api/alerts/${currentAlert.id}`
+      : 'https://aide-backend-qj4f.onrender.com/api/alerts';
 
     const method = currentAlert.id ? 'PUT' : 'POST';
 
@@ -162,7 +162,7 @@ export default function Alerts() {
     if (!alertToDelete) return;
 
     try {
-      const response = await fetch(`https://crisisaid-backend.onrender.com/api/alerts/${alertToDelete}`, {
+      const response = await fetch(`https://aide-backend-qj4f.onrender.com/api/alerts/${alertToDelete}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

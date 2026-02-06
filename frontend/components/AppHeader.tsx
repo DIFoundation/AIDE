@@ -48,7 +48,7 @@ export default function AppHeader({
     }
 
     try {
-      await fetch('https://crisisaid-backend.onrender.com/api/auth/signout', {
+      await fetch('https://aide-backend-qj4f.onrender.com/api/auth/signout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

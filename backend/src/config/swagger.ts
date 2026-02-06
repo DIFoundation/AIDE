@@ -42,7 +42,7 @@ const options: swaggerJsdoc.Options = {
         description: 'Development server'
       },
       {
-        url: 'https://aide-backend.onrender.com',
+        url: 'https://aide-backend-qj4f.onrender.com',
         description: 'Production server'
       }
     ],

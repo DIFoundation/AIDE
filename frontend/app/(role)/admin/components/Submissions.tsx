@@ -42,7 +42,7 @@ export default function Submissions() {
       try {
         setLoading(true);
         const token = Cookies.get('authToken');
-        const response = await fetch('https://crisisaid-backend.onrender.com/api/submissions/pending', {
+        const response = await fetch('https://aide-backend-qj4f.onrender.com/api/submissions/pending', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -84,7 +84,7 @@ export default function Submissions() {
   const updateSubmissionStatus = async (id: string, status: 'APPROVED' | 'REJECTED') => {
     try {
       const token = Cookies.get('authToken');
-      const endpoint = `https://crisisaid-backend.onrender.com/api/submissions/${id}/${status.toLowerCase()}`;
+      const endpoint = `https://aide-backend-qj4f.onrender.com/api/submissions/${id}/${status.toLowerCase()}`;
       
       const response = await fetch(endpoint, {
         method: 'PATCH',
