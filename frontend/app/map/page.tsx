@@ -9,6 +9,7 @@ import { Alert, Resource } from '@/types';
 import AppHeader from '@/components/AppHeader';
 import ResourceDrawer from '@/components/ResourceDrawer';
 import CriticalAlert from '@/components/CriticalAlert';
+import {ChatWidget} from '@/components/chat/ChatWidget';
 
 // Dynamically import LeafletMap with SSR disabled
 const LeafletMap = dynamic(
@@ -164,6 +165,8 @@ export default function MapPage() {
         alerts={alerts} 
         onDismiss={handleDismiss} 
       />
+
+      <ChatWidget />
     </div>
   );
 }
