@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Cookies from "js-cookie";
-import { Plus, Pencil, Trash2, Search } from "lucide-react";
+import { Plus, Pencil, Trash2, Search, CheckCircle, X, BadgeCheck, CircleX } from "lucide-react";
 import LocationPicker from '@/components/LocationPicker';
 import { toast } from "sonner";
 
@@ -300,10 +300,6 @@ export default function Resources() {
     }
   };
 
-  const getVerifiedBadgeVariant = (verified: boolean) => {
-    return verified ? "default" : "destructive";
-  };
-
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -377,7 +373,22 @@ export default function Resources() {
                 <TableRow key={resource.id}>
                   <TableCell className="font-medium">
                     <div className="flex flex-col">
-                      <span>{resource.name}</span>
+                      <span className="flex items-center gap-2">
+                        {resource.name} 
+                        {resource.verified ? (
+                          <button
+                            className='text-green-500'
+                          >
+                            <BadgeCheck className="h-4 w-4" />
+                          </button>
+                        ) : (
+                          <button
+                            className='text-red-500'
+                          >
+                            <CircleX className="h-4 w-4" />
+                          </button>
+                        )}
+                      </span>
                       <span className="text-sm text-muted-foreground line-clamp-1">
                         {resource.description}
                       </span>
@@ -455,7 +466,7 @@ export default function Resources() {
                     {resource.operating_hours}
                   </TableCell>
                   <TableCell>
-                    {resource.submitted_by.name}
+                    {resource.submitted_by?.name}
                   </TableCell>
                   <TableCell className="text-right space-x-2">
                     <Button
@@ -596,7 +607,7 @@ export default function Resources() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Capacity</label>
+                  <label className="text-sm font-medium">Capacity *</label>
                   <Input
                     type="number"
                     value={currentResource.capacity || ''}
