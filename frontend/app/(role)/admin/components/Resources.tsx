@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Cookies from "js-cookie";
-import { Plus, Pencil, Trash2, Search } from "lucide-react";
+import { Plus, Pencil, Trash2, Search, CheckCircle, X, BadgeCheck, CircleX } from "lucide-react";
 import LocationPicker from '@/components/LocationPicker';
 import { toast } from "sonner";
 
@@ -373,7 +373,22 @@ export default function Resources() {
                 <TableRow key={resource.id}>
                   <TableCell className="font-medium">
                     <div className="flex flex-col">
-                      <span>{resource.name}</span>
+                      <span className="flex items-center gap-2">
+                        {resource.name} 
+                        {resource.verified ? (
+                          <button
+                            className='text-green-500'
+                          >
+                            <BadgeCheck className="h-4 w-4" />
+                          </button>
+                        ) : (
+                          <button
+                            className='text-red-500'
+                          >
+                            <CircleX className="h-4 w-4" />
+                          </button>
+                        )}
+                      </span>
                       <span className="text-sm text-muted-foreground line-clamp-1">
                         {resource.description}
                       </span>
@@ -395,7 +410,54 @@ export default function Resources() {
                         .join(" ")}
                     </Badge>
                   </TableCell>
-                  <TableCell>{resource.verified ? "Yes" : "No"}</TableCell>
+                  <TableCell>
+                    <Select
+                      value={resource.verified ? "true" : "false"}
+                      onValueChange={async (value) => {
+                        try {
+                          const token = Cookies.get("authToken");
+                          const response = await fetch(
+                            `https://aide-backend-qj4f.onrender.com/api/resources/${resource.id}/verify`,
+                            {
+                              method: "PATCH",
+                              headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token}`,
+                              },
+                              body: JSON.stringify({
+                                verified: value === "true",
+                              }),
+                            }
+                          );
+
+                          if (!response.ok) {
+                            throw new Error("Failed to update verification status");
+                          }
+
+                          // Update the local state to reflect the change
+                          setResources(
+                            resources.map((r) =>
+                              r.id === resource.id
+                                ? { ...r, verified: value === "true" }
+                                : r
+                            )
+                          );
+                          toast.success("Verification status updated successfully");
+                        } catch (error) {
+                          console.error("Error updating verification status:", error);
+                          toast.error("Failed to update verification status");
+                        }
+                      }}
+                    >
+                      <SelectTrigger className="w-[120px]">
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="true">Verified</SelectItem>
+                        <SelectItem value="false">Unverified</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </TableCell>
                   <TableCell>{resource.capacity}</TableCell>
                   <TableCell className="max-w-[200px] truncate">
                     {resource.address}
@@ -404,7 +466,7 @@ export default function Resources() {
                     {resource.operating_hours}
                   </TableCell>
                   <TableCell>
-                    {resource.submitted_by.name}
+                    {resource.submitted_by?.name}
                   </TableCell>
                   <TableCell className="text-right space-x-2">
                     <Button
@@ -545,7 +607,7 @@ export default function Resources() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Capacity</label>
+                  <label className="text-sm font-medium">Capacity *</label>
                   <Input
                     type="number"
                     value={currentResource.capacity || ''}
@@ -574,7 +636,6 @@ export default function Resources() {
                     }
                     min="0"
                     placeholder="Enter current occupancy"
-                    required
                   />
                 </div>
               </div>

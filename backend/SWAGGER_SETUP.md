@@ -266,7 +266,7 @@ const servers = process.env.NODE_ENV === 'production'
   : [
       { url: 'http://localhost:5000', description: 'Development' },
       { url: 'https://staging.aide.com', description: 'Staging' },
-      { url: 'https://api.aide.com', description: 'Production' }
+      { url: 'https://aide-backend-qj4f.onrender.com', description: 'Production' }
     ];
 ```
 

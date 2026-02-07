@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, MapPin, Clock, Phone, AlertTriangle, CheckCircle, XCircle, User, Shield, Mail, Settings, Pin } from 'lucide-react';
+import { X, MapPin, Clock, Phone, AlertTriangle, CheckCircle, Mail, Pin } from 'lucide-react';
 import { Resource } from '@/types';
 
 type ResourceDrawerProps = {
@@ -175,6 +175,12 @@ const ResourceDrawer: React.FC<ResourceDrawerProps> = ({ isOpen, onClose, resour
                   <p>Submitted by: {resource.submitted_by.name}</p>
                 </div>
               )}
+
+              {resource.verified_by && (
+                <div className="mt-4 text-xs text-foreground/50">
+                  <p>Verified by: {resource.verified_by.name}</p>
+                </div>
+              )}
               
               {/* {getAdminActions()} */}
             </div>
@@ -183,7 +189,7 @@ const ResourceDrawer: React.FC<ResourceDrawerProps> = ({ isOpen, onClose, resour
               <button
                 onClick={() => {
                   // TODO: Implement get directions
-                  const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(resource.address || ''), encodeURIComponent(resource.city || ''), encodeURIComponent(resource.country || '')}`;
+                  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${resource.latitude},${resource.longitude}`;
                   window.open(mapsUrl, '_blank');
                 }}
                 className="w-full px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors flex items-center justify-center"
