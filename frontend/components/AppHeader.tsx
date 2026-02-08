@@ -5,7 +5,7 @@ import { Search, Menu, X, LogOut, User, Home } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { toast } from 'sonner';
 import { ResourceType } from '@/types';
 import Image from 'next/image';
@@ -34,9 +34,25 @@ export default function AppHeader({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(!!getAuthToken());
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSearch?.(searchQuery, resourceType);
+  // const handleSearch = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   onSearch?.(searchQuery, resourceType);
+  // };
+
+  const handleSearch = async (query: string) => {
+    // Use Gemini to interpret natural language queries
+    const response = await fetch('/api/gemini/search', {
+      method: 'POST',
+      body: JSON.stringify({
+        query,
+        availableTypes: ['FOOD', 'WATER', 'SHELTER', 'MEDICAL', 'CLOTHING']
+      })
+    });
+  
+    const { resourceType, location, filters } = await response.json();
+    
+    // Apply intelligent search
+    onSearch?.(query, resourceType);
   };
 
   const token = getAuthToken();
@@ -75,18 +91,28 @@ export default function AppHeader({
   };
 
   return (
-    <header className="sticky top-0 z-400 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
-      <div className="container flex h-14 items-center px-4 md:px-6 justify-between">
+    <header className="sticky top-0 z-[100] w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+      <div className="flex h-14 items-center px-4 md:px-6 justify-between">
         {/* Mobile Menu Button */}
         <div className="flex items-center space-x-2 md:hidden">
           <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
+              <Button variant="ghost" size="icon" className="md:hidden relative z-10">
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] p-0">
+            <SheetContent side="left" className="w-[300px] p-0 z-1000">
+              <SheetHeader className="flex flex-row items-center space-x-2">
+                <Image
+                  src="/favicon.ico"
+                  alt="AIDE Logo"
+                  width={44}
+                  height={44}
+                  className='rounded-lg'
+                />
+                <SheetTitle>AIDE</SheetTitle>
+              </SheetHeader>
               <nav className="flex flex-col h-full p-4 space-y-4">
                 <Button
                   variant="ghost"
@@ -142,7 +168,7 @@ export default function AppHeader({
 
         {/* Search Bar */}
         <div className="flex-1 px-4">
-          <form onSubmit={handleSearch} className="relative">
+          <form onSubmit={(e) => handleSearch(searchQuery)} className="relative">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
