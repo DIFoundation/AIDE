@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Gem, Send, TriangleAlert, Users } from 'lucide-react';
+import { Gem, Send, Sparkles, TriangleAlert, Users } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { getAuthToken } from '@/lib/cookies';
@@ -44,13 +44,32 @@ interface Distribution {
   SHELTER: number;
 }
 
+type Insights = {
+  critical_issue: {
+    description: string;
+    impact: string;
+  };
+  resource_gap: {
+    status: {
+      shelter: string;
+      food: string;
+      medical: string;
+      water: string;
+    };
+    severity: string;
+    
+  };
+  recommendations: string[];
+}
+
 export default function Dashboard() {
   const router = useRouter()
   const [stats, setStats] = useState<Stats | null>(null);
   const [distribution, setDistribution] = useState<Distribution | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const token = getAuthToken()
+  const token = getAuthToken();
+  const [aiInsights, setAIInsights] = useState<Insights | null>(null);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -117,6 +136,45 @@ export default function Dashboard() {
     fetchDistribution();
   }, [router, token])
 
+  useEffect(() => {
+    const generateInsights = async () => {
+      const prompt = `Analyze this emergency resource dashboard data and provide 3 key insights:
+
+  Total Resources: ${stats?.resources.total}
+  Available: ${stats?.resources.available}
+  Pending Verification: ${stats?.resources.pendingVerification}
+  Active Alerts: ${stats?.alerts.active}
+  Critical Alerts: ${stats?.alerts.critical}
+  Pending Submissions: ${stats?.submissions.pending}
+
+  Distribution:
+  - Shelter: ${distribution?.SHELTER}
+  - Food: ${distribution?.FOOD}
+  - Medical: ${distribution?.MEDICAL}
+  - Water: ${distribution?.CLOTHING}
+
+  Provide:
+  1. Most critical issue requiring immediate attention
+  2. Resource gap analysis
+  3. Recommended action
+
+  Keep it under 150 words.`;
+
+      const response = await fetch('/api/gemini/insights', {
+        method: 'POST',
+        body: JSON.stringify({ prompt })
+      });
+
+      const insights = await response.json();
+      console.log('insights: ', insights)
+      setAIInsights(insights);
+    };
+
+    if (stats && distribution) {
+      generateInsights();
+    }
+  }, [stats, distribution]);
+
   if (loading) {
     return (
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -181,6 +239,36 @@ export default function Dashboard() {
           icon={<Users className="h-4 w-4" />}
         />
       </div>
+
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-5 w-5 text-primary" />
+            <CardTitle>AI-Powered Insights</CardTitle>
+          </div>
+        </CardHeader>
+        {
+          aiInsights ? (
+            <CardContent>
+              <div className="prose prose-sm">
+                {JSON.stringify(aiInsights)}
+              </div>
+
+            </CardContent>
+          ) : (
+            <CardContent>
+              <div className="prose prose-sm">
+                Analyzing dashboard data...
+              </div>
+            </CardContent>
+          )
+        }
+        {/* <CardContent>
+          <div className="prose prose-sm">
+            {aiInsights || 'Analyzing dashboard data...'}
+          </div>
+        </CardContent> */}
+      </Card>
 
       {/* Add more dashboard widgets here */}
     </div>

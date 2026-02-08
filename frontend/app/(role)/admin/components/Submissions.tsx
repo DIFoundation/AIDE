@@ -108,6 +108,27 @@ export default function Submissions() {
     }
   };
 
+  // AI-powered submission validation
+const validateSubmissionWithAI = async (submission: Partial<Submission>) => {
+  const prompt = `Analyze this emergency submission for completeness and validity:
+
+Name: ${submission.title}
+Description: ${submission.description}
+
+Check for:
+1. Is the information complete and realistic?
+2. Are there any red flags or suspicious details?
+
+Provide a brief validation report with a recommendation (APPROVE/REVIEW/REJECT).`;
+
+  const response = await fetch('/api/gemini/validate', {
+    method: 'POST',
+    body: JSON.stringify({ prompt })
+  });
+
+  return await response.json();
+};
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">

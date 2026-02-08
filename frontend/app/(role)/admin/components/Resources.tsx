@@ -300,6 +300,51 @@ export default function Resources() {
     }
   };
 
+  // AI-powered resource validation
+  const validateResourceWithAI = async (resource: Partial<Resource>) => {
+    const prompt = `Analyze this emergency resource submission for completeness and validity:
+
+  Name: ${resource.name}
+  Type: ${resource.type}
+  Description: ${resource.description}
+  Address: ${resource.address}, ${resource.city}, ${resource.country}
+  Contact: ${resource.phone}, ${resource.email}
+
+  Check for:
+  1. Is the information complete and realistic?
+  2. Are there any red flags or suspicious details?
+  3. Does the capacity (${resource.capacity}) seem reasonable for the type?
+  4. Are contact details formatted correctly?
+
+  Provide a brief validation report with a recommendation (APPROVE/REVIEW/REJECT).`;
+
+    const response = await fetch('/api/gemini/validate', {
+      method: 'POST',
+      body: JSON.stringify({ prompt })
+    });
+
+    return await response.json();
+  };
+
+  const autoCategorizResource = async (description: string, name: string) => {
+    const prompt = `Based on this resource description, determine the most appropriate category:
+  
+  Name: ${name}
+  Description: ${description}
+  
+  Categories: FOOD, WATER, SHELTER, MEDICAL, CLOTHING, OTHER
+  
+  Respond with ONLY the category name.`;
+  
+    const response = await fetch('/api/gemini/categorize', {
+      method: 'POST',
+      body: JSON.stringify({ prompt })
+    });
+  
+    const { category } = await response.json();
+    setCurrentResource({ ...currentResource, type: category as ResourceType });
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -318,6 +363,7 @@ export default function Resources() {
 
   return (
     <div className="space-y-6">
+      
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl font-bold">Resources</h1>
         <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">

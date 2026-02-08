@@ -27,7 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { AlertCircle, Edit, Trash2, Plus } from 'lucide-react';
+import { AlertCircle, Edit, Trash2, Plus, Sparkles } from 'lucide-react';
 import LocationPicker from '@/components/LocationPicker';
 import { getAuthToken } from '@/lib/cookies';
 import { AlertSeverity } from '@/types';
@@ -209,6 +209,31 @@ export default function Alerts() {
       ...currentAlert,
       affected_areas: newAffectedAreas,
     });
+  };
+
+  // #################
+  // Add AI-powered alert generation button
+  const generateAlertInstructions = async () => {
+    const prompt = `Generate clear, actionable safety instructions for a ${currentAlert?.severity} alert about "${currentAlert?.title}" in ${currentAlert?.address}. 
+  
+  Alert message: ${currentAlert?.message}
+  
+  Provide:
+  1. Immediate actions to take
+  2. What to avoid
+  3. Where to go for safety
+  4. Emergency contacts to call
+  
+  Keep it under 200 words, clear, and action-oriented.`;
+
+    const response = await fetch('/api/gemini/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+
+    const { text } = await response.json();
+    setCurrentAlert({ ...currentAlert, instructions: text });
   };
 
   if (isLoading) {
@@ -552,6 +577,27 @@ export default function Alerts() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <div className="flex gap-2">
+        <Textarea
+          id="instructions"
+          name="instructions"
+          value={currentAlert?.instructions || ''}
+          onChange={handleChange}
+          rows={3}
+          placeholder="Provide clear instructions for this alert"
+          required
+        />
+        <Button
+          type="button"
+          variant="outline"
+          onClick={generateAlertInstructions}
+          className="shrink-0"
+        >
+          <Sparkles className="h-4 w-4 mr-2" />
+          AI Generate
+        </Button>
+      </div>
     </div>
   );
 }

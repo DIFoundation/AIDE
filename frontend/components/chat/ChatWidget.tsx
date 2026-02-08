@@ -4,6 +4,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, MessageCircle, X, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Resource } from '@/types';
+import { apiService } from '@/lib/services/api';
 
 interface Message {
   id: string;
@@ -27,6 +29,7 @@ export function ChatWidget() {
   const [isLoading, setIsLoading] = useState(false);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [nearbyResources, setNearbyResources] = useState<Resource[]>([]);
 
   // Toggle chat window
   const toggleChat = () => setIsOpen(!isOpen);
@@ -70,6 +73,34 @@ export function ChatWidget() {
     }]);
   };
 
+  useEffect(() => {
+    if (userLocation) {
+      apiService.getNearbyShelters(userLocation.lat, userLocation.lng)
+        .then((response) => {
+          if (response.data) {
+            setNearbyResources(response.data);
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching nearby resources:', error);
+        });
+    }
+  }, [userLocation]);
+
+  // useEffect(() => {
+  //   if (userLocation) {
+  //     apiService.getNearbyHospitals(userLocation.lat, userLocation.lng)
+  //       .then((response) => {
+  //         if (response.data) {
+  //           setNearbyResources(response.data);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error fetching nearby resources:', error);
+  //       });
+  //   }
+  // }, [userLocation]);
+
   const handleSendMessage = async (messageText: string) => {
     if (!messageText.trim()) return;
 
@@ -90,7 +121,8 @@ export function ChatWidget() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: messageText,
-          location: userLocation
+          location: userLocation,
+          nearbyResources: nearbyResources.slice(0, 5)
         }),
       });
 
@@ -135,6 +167,38 @@ export function ChatWidget() {
     }
   };
 
+  const QuickActions = () => (
+    <div className="p-3 border-t border-gray-200">
+      <p className="text-xs text-gray-500 mb-2">Quick Actions</p>
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          onClick={() => handleSendMessage("Find nearest shelter")}
+          className="text-xs p-2 bg-blue-50 rounded hover:bg-blue-100"
+        >
+          🏠 Find Shelter
+        </button>
+        <button
+          onClick={() => handleSendMessage("What should I do in a flood?")}
+          className="text-xs p-2 bg-red-50 rounded hover:bg-red-100"
+        >
+          🌊 Flood Help
+        </button>
+        <button
+          onClick={() => handleSendMessage("Find medical help")}
+          className="text-xs p-2 bg-green-50 rounded hover:bg-green-100"
+        >
+          🏥 Medical Aid
+        </button>
+        <button
+          onClick={() => handleSendMessage("Where can I get food?")}
+          className="text-xs p-2 bg-yellow-50 rounded hover:bg-yellow-100"
+        >
+          🍲 Food Resources
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="fixed bottom-6 right-6 z-500 flex flex-col items-end space-y-2">
       {isOpen && (
@@ -149,6 +213,8 @@ export function ChatWidget() {
               <X className="h-5 w-5" />
             </button>
           </div>
+
+          <QuickActions />
 
           {/* Messages container */}
           <div className="flex-1 p-4 overflow-y-auto space-y-4">

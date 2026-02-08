@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, AlertTriangle, Info, AlertCircle, Bell } from 'lucide-react';
 import { Alert, AlertSeverity } from '@/types';
@@ -43,6 +43,8 @@ export default function CriticalAlert({
 }: CriticalAlertProps) {
   const [visibleAlert, setVisibleAlert] = React.useState<Alert | null>(null);
   const [isHovered, setIsHovered] = React.useState(false);
+  const [translatedAlert, setTranslatedAlert] = useState<Alert | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState('en');
 
   // Auto-dismiss after 10 seconds, unless hovered
   React.useEffect(() => {
@@ -70,6 +72,26 @@ export default function CriticalAlert({
     }
   }, [alerts, visibleAlert]);
 
+  const translateAlert = async (alert: Alert, targetLang: string) => {
+    const response = await fetch('/api/gemini/translate', {
+      method: 'POST',
+      body: JSON.stringify({
+        text: `${alert.title}\n\n${alert.message}\n\nInstructions: ${alert.instructions}`,
+        targetLanguage: targetLang
+      })
+    });
+  
+    const { translated } = await response.json();
+    const [title, message, instructions] = translated.split('\n\n');
+    
+    setTranslatedAlert({
+      ...alert,
+      title,
+      message,
+      instructions: instructions.replace('Instructions: ', '')
+    });
+  };
+
   if (!visibleAlert) return null;
 
   return (
@@ -92,7 +114,7 @@ export default function CriticalAlert({
               <div className="flex items-center gap-2">
                 <Bell size={14} className="text-white/80" />
                 <h4 className="font-bold text-sm uppercase tracking-wider text-white/90">
-                  {visibleAlert.title}
+                  {translatedAlert?.title || visibleAlert.title}
                 </h4>
               </div>
               <button 
@@ -105,13 +127,15 @@ export default function CriticalAlert({
             </div>
             
             <p className="text-sm text-white/90 leading-relaxed">
-              {visibleAlert.message}
+              {translatedAlert?.message || visibleAlert.message}
             </p>
             
-            {visibleAlert.instructions && (
+            {(translatedAlert?.instructions || visibleAlert.instructions) && (
               <div className="mt-2 pt-2 border-t border-white/10">
                 <p className="text-xs font-medium text-white/80">Instructions:</p>
-                <p className="text-xs text-white/70">{visibleAlert.instructions}</p>
+                <p className="text-xs text-white/70">
+                  {translatedAlert?.instructions || visibleAlert.instructions}
+                </p>
               </div>
             )}
             
@@ -119,6 +143,29 @@ export default function CriticalAlert({
               <p className="text-xs text-white/60">
                 {new Date(visibleAlert.created_at).toLocaleString()}
               </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <select
+                value={selectedLanguage}
+                onChange={(e) => {
+                  const lang = e.target.value;
+                  setSelectedLanguage(lang);
+                  if (lang === 'en') {
+                    // Reset to original if English is selected
+                    setTranslatedAlert(null);
+                  } else {
+                    translateAlert(visibleAlert, lang);
+                  }
+                }}
+                className="text-xs bg-white/20 rounded px-2 py-1 mt-2"
+              >
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="ar">العربية</option>
+                <option value="zh">中文</option>
+              </select>
             </div>
           </div>
         </div>
