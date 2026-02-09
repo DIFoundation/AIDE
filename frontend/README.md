@@ -135,7 +135,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Made with ❤️ by the AIDE Team
+Made with Empathy by the AIDE Team
 
 One-line pitch
 
