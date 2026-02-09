@@ -1,11 +1,11 @@
-# CrisisAid Backend API
+# AIDE Backend API
 
 [![Node.js](https://img.shields.io/badge/Node.js-43853D?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express.js-404D59?style=flat&logo=express)](https://expressjs.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-181818?style=flat&logo=supabase&logoColor=white)](https://supabase.com/)
 
-A robust, scalable backend API for CrisisAid, managing disaster relief resources, emergency alerts, and community submissions with real-time capabilities.
+A robust, scalable backend API for AIDE, managing disaster relief resources, emergency alerts, and community submissions with real-time capabilities.
 
 ## Features
 
@@ -31,8 +31,8 @@ A robust, scalable backend API for CrisisAid, managing disaster relief resources
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/crisisaid-backend.git
-   cd crisisaid-backend
+   git clone https://github.com/DIFoundation/AIDE.git
+   cd AIDE/backend
    ```
 
 2. Install dependencies:
@@ -145,12 +145,12 @@ pnpm test:watch
 
 1. Build the Docker image:
    ```bash
-   docker build -t crisisaid-backend .
+   docker build -t aide-backend .
    ```
 
 2. Run the container:
    ```bash
-   docker run -p 5000:5000 --env-file .env crisisaid-backend
+   docker run -p 5000:5000 --env-file .env aide-backend
    ```
 
 ### Using PM2 (Production)
@@ -162,7 +162,7 @@ pnpm test:watch
 
 2. Start the application:
    ```bash
-   NODE_ENV=production pm2 start dist/server.js --name crisisaid-backend
+   NODE_ENV=production pm2 start dist/server.js --name aide-backend
    ```
 
 ## Contributing
@@ -183,11 +183,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - All the amazing open-source projects that made this possible
 - Our wonderful contributors
-- The CrisisAid team for their hard work and dedication
+- The AIDE team for their hard work and dedication
 
 ---
 
-Made with ❤️ by the CrisisAid Team
+Made with empathy by the AIDE Team
 
 ## Setup Instructions
 

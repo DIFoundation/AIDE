@@ -53,7 +53,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ isLoading, children }) => {
             <h2 className="text-lg font-semibold text-foreground">Artificial Intelligence Disaster Emergency</h2>
             <p className="text-muted-foreground mt-2">Connecting help with those in need</p>
           </motion.div>
-          {isLoading && (
+          {isLoading ? (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -62,6 +62,22 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ isLoading, children }) => {
             >
               <Loader2 className="h-4 w-4 animate-spin" />
               <span>Loading resources...</span>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="mt-8 flex items-center gap-2 text-muted-foreground"
+            >
+              <span>powered by:</span>
+              <img
+                src='/gemini3flash.png'
+                alt="AIDE Logo"
+                width={200}
+                height={200}
+                className='rounded-lg'
+              />
             </motion.div>
           )}
         </motion.div>
