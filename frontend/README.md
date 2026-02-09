@@ -1,36 +1,154 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AIDE Frontend
 
-## Getting Started
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-First, run the development server:
+A real-time, location-based web platform that helps people quickly find verified emergency resources—shelters, food, medical aid, water, and power—during crises.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🌟 Features
+
+- **Interactive Map**: Real-time visualization of emergency resources
+- **Resource Categories**: Filter by shelter, food, medical aid, water, and more
+- **Verified Information**: All resources are verified by trusted organizations
+- **Mobile-First Design**: Works seamlessly on all devices
+- **Dark/Light Mode**: Built-in theme support
+- **Accessibility**: WCAG compliant components
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18.0.0 or later
+- npm or pnpm
+- Git
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/DIFoundation/AIDE.git
+   cd AIDE/frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   pnpm install
+   # or
+   npm install
+   ```
+
+3. Set up environment variables:
+   ```bash
+   cp .env.example .env.local
+   # Update the environment variables in .env.local
+   ```
+
+4. Run the development server:
+   ```bash
+   pnpm dev
+   # or
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 14](https://nextjs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Maps**: [Leaflet](https://leafletjs.com/)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Forms**: [React Hook Form](https://react-hook-form.com/)
+- **UI Components**: [shadcn/ui](https://ui.shadcn.com/)
+- **Icons**: [Lucide Icons](https://lucide.dev/)
+- **Testing**: [Jest](https://jestjs.io/), [React Testing Library](https://testing-library.com/)
+
+## 📁 Project Structure
+
+```
+frontend/
+├── public/             # Static files
+├── src/
+│   ├── app/            # App router pages
+│   ├── components/     # Reusable components
+│   ├── lib/            # Utility functions
+│   ├── styles/         # Global styles
+│   └── types/          # TypeScript type definitions
+├── .eslintrc.json      # ESLint config
+├── .gitignore
+├── next.config.js      # Next.js config
+├── package.json
+└── tsconfig.json      # TypeScript config
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌐 API Integration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The frontend communicates with the AIDE backend API. Make sure the backend service is running and properly configured in your environment variables.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧪 Testing
 
-## Learn More
+Run the test suite:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm test
+# or
+npm test
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Vercel (Recommended)
 
-## Deploy on Vercel
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FDIFoundation%2FAIDE%2Ffrontend)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Push your code to a GitHub repository
+2. Import the repository on Vercel
+3. Add your environment variables
+4. Deploy!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Other Platforms
+
+You can also deploy to other platforms like Netlify, AWS Amplify, or any static hosting service that supports Next.js.
+
+## 🤝 Contributing
+
+We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) to get started.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- All the amazing open-source projects that made this possible
+- Our wonderful contributors
+- The AIDE team for their hard work and dedication
+
+---
+
+Made with ❤️ by the AIDE Team
+
+One-line pitch
+
+A real-time, location-based web platform that helps people quickly find verified emergency resources—shelters, food, medical aid, water, and power—during crises.
+
+1️⃣ Core Problem (What judges must instantly get)
+
+During emergencies (floods, protests, blackouts, disasters), people:
+
+Don’t know where to find help
+
+Can’t verify which resources are available
+
+Waste critical time searching unreliable information
+
+AIDE solves this by centralizing verified, location-based emergency resources in one fast, mobile-friendly map.
