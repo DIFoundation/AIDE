@@ -29,7 +29,7 @@ export default function LandingPage() {
         <div className="flex justify-between items-center px-4 sm:px-6 py-3 max-w-7xl mx-auto">
           <div className="flex items-center gap-3">
             <Image
-              src="/logo.png"
+              src="/favicon.ico"
               alt="AIDE Logo"
               width={44}
               height={44}
